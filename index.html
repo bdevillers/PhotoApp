@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application de Rapport Photo v24.11.10.19-51</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        #map {
+            width: 100%;
+            height: 300px;
+            margin-top: 10px;
+        }
+        #logo {
+            max-width: 150px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>Application de Rapport Photo</h2>
+
+<img id="logo" src="logo.png" alt="Logo de la société">
+
+<div>
+    <button id="takePhotoBtn">Prendre une photo</button>
+    <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
+</div>
+<img id="photo" style="display: none; max-width: 100%; height: auto;" />
+
+<!-- Conteneur pour la carte -->  
+<div id="map"></div> 
+
+<div>
+    <button id="generatePdfBtn" disabled>Générer le PDF</button>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
