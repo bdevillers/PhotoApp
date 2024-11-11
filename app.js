@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 21-00';
+    const appVersion = 'v. 21-05';
     
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
@@ -73,6 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 reject("Géolocalisation non supportée par le navigateur.");
             }
         });
+        //DEBUG
+        alert('Latitude = '+latitude);
     }
 
     // Prendre une photo et afficher la géolocalisation
