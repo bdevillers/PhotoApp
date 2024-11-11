@@ -12,12 +12,27 @@ document.addEventListener("DOMContentLoaded", () => {
     let ipData = null;
     let map;
 
-    // Prendre une photo
-    takePhotoBtn.addEventListener("click", () => {
+    // Format date pour le nom de fichier
+    function formatDate() {
+        const now = new Date();
+        return now.toISOString().replace(/[:.]/g, "-");
+    }
+
+    // Prendre une photo et afficher la géolocalisation
+    takePhotoBtn.addEventListener("click", async () => {
         cameraInput.click();
+
+        // Obtenir la géolocalisation après le clic
+        try {
+            geolocationData = await getGeolocation();
+            await displayMap(geolocationData.latitude, geolocationData.longitude);
+        } catch (error) {
+            alert("Erreur lors de la géolocalisation : " + error);
+        }
     });
 
-    cameraInput.addEventListener("change", (event) => {
+    // Récupération de la photo depuis l'appareil
+    cameraInput.addEventListener("change", async (event) => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -25,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 photo.src = e.target.result;
                 photo.style.display = "block";
                 photoData = e.target.result;
+                generatePdfBtn.disabled = false; // Active le bouton PDF
             };
             reader.readAsDataURL(file);
         }
@@ -44,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 reject("Géolocalisation non supportée par le navigateur.");
             }
         });
-        generatePdfBtn.disabled = false;
     }
 
     // Récupérer l'adresse avec la géolocalisation
@@ -55,17 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return data.display_name;
         } else {
             throw new Error("Impossible de récupérer l'adresse.");
-        }
-    }
-
-    // Obtenir l'adresse IP
-    async function getIPAddress() {
-        const response = await fetch("https://api.ipify.org?format=json");
-        if (response.ok) {
-            const data = await response.json();
-            return data.ip;
-        } else {
-            throw new Error("Impossible de récupérer l'adresse IP.");
         }
     }
 
@@ -82,36 +86,18 @@ document.addEventListener("DOMContentLoaded", () => {
         mapContainer.style.display = "block";
     }
 
-    async function captureMap() {
-        return html2canvas(mapContainer).then(canvas => canvas.toDataURL("image/png"));
-    }
-
+    // Génération du PDF
     async function generatePdf() {
-        alert('v14-30')
         try {
-            geolocationData = await getGeolocation();
-            await displayMap(geolocationData.latitude, geolocationData.longitude);
-        } catch (error) {
-            alert(error);
-            return;
-        }
-
-        try {
+            // Compléter la géolocalisation avec l'adresse
             const { latitude, longitude } = geolocationData;
             addressData = await getAddress(latitude, longitude);
-        } catch (error) {
-            alert(error);
-            return;
-        }
-
-        try {
             ipData = await getIPAddress();
         } catch (error) {
-            alert(error);
+            alert("Erreur lors de la génération du PDF : " + error);
             return;
         }
 
-        const mapImageData = await captureMap();
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
@@ -133,23 +119,16 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Latitude: ${geolocationData.latitude}`, 10, 160);
         doc.text(`Longitude: ${geolocationData.longitude}`, 10, 170);
         doc.text(`Adresse: ${addressData}`, 10, 180);
-        
-        // Information sur le périphérique
-        doc.text(`Périphérique: ${navigator.userAgent}`, 10, 190);
-        doc.text(`Adresse IP: ${ipData}`, 10, 200);
+        doc.text(`Adresse IP: ${ipData}`, 10, 190);
 
         // Carte
         //if (mapImageData) {
         //    doc.addImage(mapImageData, "PNG", 10, 210, 180, 100);
         //}
 
-        // Horodatage et autres informations
-        const photoName = `Photo_${new Date().toISOString()}.jpg`;
-        doc.text(`Nom de la photo: ${photoName}`, 10, 320);
-
-        doc.save("rapport_photo.pdf");
-
-        alert(console.log);
+        // Nom dynamique pour le fichier
+        const fileName = `${formatDate()}-rapport_photo.pdf`;
+        doc.save(fileName);
     }
 
     generatePdfBtn.addEventListener("click", generatePdf);
