@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 21-25';
+    const appVersion = 'v. 21-26';
+
+    // Afficher la version de l'application
+    const appVersionElement = document.getElementById("appVersion");
+    if (appVersionElement) {
+        appVersionElement.textContent = appVersion; // Insère la version dans l'élément
+    }
     
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
