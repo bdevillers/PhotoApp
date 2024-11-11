@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 photo.src = e.target.result;
                 photo.style.display = "block";
                 photoData = e.target.result;
-                generatePdfBtn.disabled = false;
             };
             reader.readAsDataURL(file);
         }
@@ -80,6 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         L.marker([latitude, longitude]).addTo(map).bindPopup("Position actuelle").openPopup();
         mapContainer.style.display = "block";
+        generatePdfBtn.disabled = false;
     }
 
     async function captureMap() {
