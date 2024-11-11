@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const takePhotoBtn = document.getElementById("takePhotoBtn");
+    const takePhoto = document.getElementById("takePhoto");
     const cameraInput = document.getElementById("cameraInput");
     const photo = document.getElementById("photo");
-    const generatePdfBtn = document.getElementById("generatePdfBtn");
+    const generatePdf = document.getElementById("generatePdf");
     const mapContainer = document.getElementById("map");
-    const logoPath = "logo.png";  // Assurez-vous que le logo est disponible sous ce chemin
+    const logoPath = "https://www.adeena.fr/wp-content/uploads/2024/01/Logo-ADEENA-233x44-sans-texte-150x38.png";  // Assurez-vous que le logo est disponible sous ce chemin
 
     let photoData = null;
     let geolocationData = null;
