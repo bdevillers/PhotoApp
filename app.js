@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 photo.style.display = "block";
                 photoData = e.target.result;
                 generatePdfBtn.disabled = false; // Active le bouton PDF
-                alert('v 14-40');
+                alert('v 14-45');
             };
             reader.readAsDataURL(file);
         }
@@ -74,6 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Obtenir l'adresse IP
+    async function getIPAddress() {
+        const response = await fetch("https://api.ipify.org?format=json");
+        if (response.ok) {
+            const data = await response.json();
+            return data.ip;
+        } else {
+            throw new Error("Impossible de récupérer l'adresse IP.");
+        }
+    }
+    
     async function displayMap(latitude, longitude) {
         if (!map) {
             map = L.map('map').setView([latitude, longitude], 13);
