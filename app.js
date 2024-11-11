@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function generatePdf() {
-        alert('v14-00')
+        alert('v14-15')
         try {
             geolocationData = await getGeolocation();
             await displayMap(geolocationData.latitude, geolocationData.longitude);
@@ -148,6 +148,8 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Nom de la photo: ${photoName}`, 10, 320);
 
         doc.save("rapport_photo.pdf");
+
+        alert(console.log);
     }
 
     generatePdfBtn.addEventListener("click", generatePdf);
