@@ -1,8 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 20-40';
-    const versionOdiCEEPhoto = document.getElementById("app-version");
-    versionOdiCEEPhoto = appVersion;
+    const appVersion = 'v. 20-50';
     
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
