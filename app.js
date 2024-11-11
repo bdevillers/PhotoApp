@@ -87,10 +87,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function generatePdf() {
-        alert('generatePdf');
         try {
+            alert('tentative géolocalisation');
             geolocationData = await getGeolocation();
             await displayMap(geolocationData.latitude, geolocationData.longitude);
+            alert('géolocalisation en cours');
         } catch (error) {
             alert(error);
             return;
@@ -133,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Latitude: ${geolocationData.latitude}`, 10, 160);
         doc.text(`Longitude: ${geolocationData.longitude}`, 10, 170);
         doc.text(`Adresse: ${addressData}`, 10, 180);
-
+        
         // Information sur le périphérique
         doc.text(`Périphérique: ${navigator.userAgent}`, 10, 190);
         doc.text(`Adresse IP: ${ipData}`, 10, 200);
