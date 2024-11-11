@@ -111,6 +111,17 @@ document.addEventListener("DOMContentLoaded", () => {
             throw new Error("Impossible de récupérer l'adresse.");
         }
     }
+    
+    // Obtenir l'adresse IP
+    async function getIPAddress() {
+        const response = await fetch("https://api.ipify.org?format=json");
+        if (response.ok) {
+            const data = await response.json();
+            return data.ip;
+        } else {
+            throw new Error("Impossible de récupérer l'adresse IP.");
+        }
+    }
 
     async function displayMap(latitude, longitude) {
         if (!map) {
@@ -184,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 doc.text(`Version d'OS: ${osVersion}`, 10, 220);
 
                 //Informations sur la version de l'application
-                doc.text('v 18-25');
+                doc.text('v 18-30');
 
                 // Nom dynamique pour le fichier
                 const fileName = `${formatDate(true)}-rapport_photo.pdf`;
