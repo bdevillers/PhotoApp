@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 21-26';
+    const appVersion = 'v. 21-31';
 
     // Afficher la version de l'application
     const appVersionElement = document.getElementById("appVersion");
@@ -66,7 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Prendre une photo et afficher la géolocalisation
-    takePhotoBtn.addEventListener("click", async () => {
+    takePhotoBtn.addEventListener("click", async () => 
+    {
         cameraInput.click();
         alert(appVersion);
         try {
@@ -84,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Erreur lors de la géolocalisation :", error);
             alert("Erreur lors de la géolocalisation : " + error);
         }
-    });
+    );
 
     // Récupération de la photo depuis l'appareil
     cameraInput.addEventListener("change", async (event) => {
