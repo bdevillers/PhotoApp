@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 21-05';
+    const appVersion = 'v. 21-06';
     
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
@@ -93,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 photo.style.display = "block";
                 photoData = e.target.result;
                 generatePdfBtn.disabled = false; // Active le bouton PDF
+                getGeolocation();
             };
             reader.readAsDataURL(file);
         }
