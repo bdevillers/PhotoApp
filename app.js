@@ -154,7 +154,6 @@ document.addEventListener("DOMContentLoaded", () => {
       L.marker([latitude, longitude]).addTo(map).bindPopup("Position actuelle").openPopup();
       mapContainer.style.display = "block";
     }
-    }
 
     // Génération du PDF
     async function generatePdf() {
