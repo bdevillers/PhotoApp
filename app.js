@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 20-50';
+    const appVersion = 'v. 21-00';
     
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const versionMatch = userAgent.match(/OS ([\d_]+)/);
             osVersion = versionMatch ? versionMatch[1].replace(/_/g, ".") : "Inconnu";
         }
-
         return { osType, osVersion };
     }
 
@@ -79,15 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Prendre une photo et afficher la géolocalisation
     takePhotoBtn.addEventListener("click", async () => {
         cameraInput.click();
-
-        // Obtenir la géolocalisation après le clic
-        try {
-            geolocationData = await getGeolocation();
-            await displayMap(geolocationData.latitude, geolocationData.longitude);
-        } catch (error) {
-            alert("Erreur lors de la géolocalisation : " + error);
-        }
-        //Debug => Affichage de la version 
         alert(appVersion);
     });
 
