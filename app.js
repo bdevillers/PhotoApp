@@ -44,6 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 reject("Géolocalisation non supportée par le navigateur.");
             }
         });
+        generatePdfBtn.disabled = false;
     }
 
     // Récupérer l'adresse avec la géolocalisation
@@ -79,7 +80,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         L.marker([latitude, longitude]).addTo(map).bindPopup("Position actuelle").openPopup();
         mapContainer.style.display = "block";
-        generatePdfBtn.disabled = false;
     }
 
     async function captureMap() {
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function generatePdf() {
-        alert('v14-20')
+        alert('v14-30')
         try {
             geolocationData = await getGeolocation();
             await displayMap(geolocationData.latitude, geolocationData.longitude);
