@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 photo.style.display = "block";
                 photoData = e.target.result;
                 generatePdfBtn.disabled = false; // Active le bouton PDF
+                alert('v 14-40');
             };
             reader.readAsDataURL(file);
         }
