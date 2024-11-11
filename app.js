@@ -18,6 +18,35 @@ document.addEventListener("DOMContentLoaded", () => {
         return now.toISOString().replace(/[:.]/g, "-");
     }
 
+    // Obtenir le type et la version de l'OS
+    function getOSInfo() {
+        const userAgent = navigator.userAgent;
+        let osType = "Inconnu";
+        let osVersion = "Inconnu";
+
+        if (userAgent.indexOf("Win") !== -1) {
+            osType = "Windows";
+            const versionMatch = userAgent.match(/Windows NT ([\d.]+)/);
+            osVersion = versionMatch ? versionMatch[1] : "Inconnu";
+        } else if (userAgent.indexOf("Mac") !== -1) {
+            osType = "MacOS";
+            const versionMatch = userAgent.match(/Mac OS X ([\d_]+)/);
+            osVersion = versionMatch ? versionMatch[1].replace(/_/g, ".") : "Inconnu";
+        } else if (userAgent.indexOf("Linux") !== -1) {
+            osType = "Linux";
+        } else if (userAgent.indexOf("Android") !== -1) {
+            osType = "Android";
+            const versionMatch = userAgent.match(/Android ([\d.]+)/);
+            osVersion = versionMatch ? versionMatch[1] : "Inconnu";
+        } else if (userAgent.indexOf("like Mac") !== -1) {
+            osType = "iOS";
+            const versionMatch = userAgent.match(/OS ([\d_]+)/);
+            osVersion = versionMatch ? versionMatch[1].replace(/_/g, ".") : "Inconnu";
+        }
+
+        return { osType, osVersion };
+    }
+
     // Prendre une photo et afficher la géolocalisation
     takePhotoBtn.addEventListener("click", async () => {
         cameraInput.click();
@@ -41,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 photo.style.display = "block";
                 photoData = e.target.result;
                 generatePdfBtn.disabled = false; // Active le bouton PDF
-                alert('v 14-45');
+                alert('v 17-45');
             };
             reader.readAsDataURL(file);
         }
@@ -137,6 +166,10 @@ document.addEventListener("DOMContentLoaded", () => {
         //if (mapImageData) {
         //    doc.addImage(mapImageData, "PNG", 10, 210, 180, 100);
         //}
+
+        // Information OS
+        doc.text(`Type d'OS: ${osType}`, 10, 210);
+        doc.text(`Version d'OS: ${osVersion}`, 10, 220);
 
         // Nom dynamique pour le fichier
         const fileName = `${formatDate()}-rapport_photo.pdf`;
