@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function generatePdf() {
+        allert(error);
         try {
             geolocationData = await getGeolocation();
             await displayMap(geolocationData.latitude, geolocationData.longitude);
