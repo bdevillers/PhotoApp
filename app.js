@@ -70,7 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 photo.style.display = "block";
                 photoData = e.target.result;
                 generatePdfBtn.disabled = false; // Active le bouton PDF
-                alert('v 17-45');
             };
             reader.readAsDataURL(file);
         }
@@ -139,6 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const { osType, osVersion } = getOSInfo();
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
@@ -151,25 +151,50 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Photo
+        // Dimensions pour la photo
+        const maxWidth = 200;
+        const maxHeight = 200;
+    
         if (photoData) {
-            doc.addImage(photoData, "JPEG", 10, 50, 180, 100);
-        }
+            const img = new Image();
+            img.src = photoData;
+    
+            // Une fois l'image chargée, ajout dans le PDF
+            img.onload = function() {
+                const aspectRatio = img.width / img.height;
+                let width = maxWidth;
+                let height = maxHeight;
+    
+                if (aspectRatio > 1) {
+                    // Image horizontale
+                    height = maxWidth / aspectRatio;
+                } else {
+                    // Image verticale ou carrée
+                    width = maxHeight * aspectRatio;
+                }
+    
+                doc.addImage(photoData, "JPEG", 10, 50, width, height);
+            if (photoData) {
+                doc.addImage(photoData, "JPEG", 10, 50, 180, 100);
+            }
 
         // Détails géolocalisation
         doc.setFontSize(12);
         doc.text(`Latitude: ${geolocationData.latitude}`, 10, 160);
         doc.text(`Longitude: ${geolocationData.longitude}`, 10, 170);
         doc.text(`Adresse: ${addressData}`, 10, 180);
-        doc.text(`Adresse IP: ${ipData}`, 10, 190);
-
         // Carte
         //if (mapImageData) {
         //    doc.addImage(mapImageData, "PNG", 10, 210, 180, 100);
         //}
 
-        // Information OS
+        //Informations sur le périphérique
         doc.text(`Type d'OS: ${osType}`, 10, 210);
         doc.text(`Version d'OS: ${osVersion}`, 10, 220);
+        doc.text(`Adresse IP: ${ipData}`, 10, 190);
+
+        // Informations sur la version de l'application
+        doc.text('v 17-50')
 
         // Nom dynamique pour le fichier
         const fileName = `${formatDate()}-rapport_photo.pdf`;
