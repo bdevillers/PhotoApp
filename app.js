@@ -130,16 +130,30 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function displayMap(latitude, longitude) {
-        if (!map) {
-            map = L.map('map').setView([latitude, longitude], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
-        } else {
-            map.setView([latitude, longitude], 13);
-        }
-        L.marker([latitude, longitude]).addTo(map).bindPopup("Position actuelle").openPopup();
-        mapContainer.style.display = "block";
+      if (!map) {
+        // Charger les ressources Leaflet
+        const leafletCssLink = document.createElement('link');
+        leafletCssLink.rel = 'stylesheet';
+        leafletCssLink.href = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.css';
+        document.head.appendChild(leafletCssLink);
+    
+        const leafletJsScript = document.createElement('script');
+        leafletJsScript.src = 'https://unpkg.com/leaflet@1.7.1/dist/leaflet.js';
+        document.body.appendChild(leafletJsScript);
+    
+        // Créer la carte Leaflet
+        map = L.map('map').setView([latitude, longitude], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+      } else {
+        map.setView([latitude, longitude], 13);
+      }
+    
+      // Ajouter un marqueur pour la position actuelle
+      L.marker([latitude, longitude]).addTo(map).bindPopup("Position actuelle").openPopup();
+      mapContainer.style.display = "block";
+    }
     }
 
     // Génération du PDF
