@@ -170,6 +170,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 doc.text(`Type d'OS: ${osType}`, 10, 210);
                 doc.text(`Version d'OS: ${osVersion}`, 10, 220);
 
+                //Informations sur la version de l'application
+                doc.text('v 18-25');
+
                 // Nom dynamique pour le fichier
                 const fileName = `${formatDate(true)}-rapport_photo.pdf`;
                 doc.save(fileName);
