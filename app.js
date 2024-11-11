@@ -207,7 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Adresse IP: ${ipData}`, 10, 190);
 
         //Informations sur la version de l'application
-        doc.text('v 18-10')
+        doc.text('v 18-15')
 
         //Informations sur le rapport
         doc.text(formatDate);
