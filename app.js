@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const photo = document.getElementById("photo");
     const generatePdfBtn = document.getElementById("generatePdfBtn");
     const mapContainer = document.getElementById("map");
-    const logoPath = "https://www.adeena.fr/wp-content/uploads/2024/01/Logo-ADEENA-233x44-sans-texte-150x38.png"; 
+    const logoPath = "logo.png"; 
 
     let photoData = null;
     let geolocationData = null;
