@@ -53,17 +53,19 @@
 <div>
     <button id="generatePdfBtn" disabled>Générer le PDF</button>
 </div>
-
-<script src="app.js"></script>
-    <div id="app-version">
+<div id="app-version">
+    <script>
         HTML = v. 19-15
         JS = <script>
-        // Récupérer l'élément HTML où afficher la version
-        const appVersionElement = document.getElementById('app-version');
-    
-        // Afficher la version dans l'élément HTML
-        appVersionElement.textContent = `Version de l'application : ${appVersion}`;
-      </script>
-    </div>
+        // Attendre que le DOM soit chargé avant d'exécuter le code
+        document.addEventListener("DOMContentLoaded", () => {
+            // Récupérer l'élément HTML où afficher la version
+            const appVersionElement = document.getElementById('app-version');
+            // Afficher la version dans l'élément HTML
+            appVersionElement.textContent = `Version de l'application : ${appVersion}`;
+        });
+    </script>
+    <script src="app.js"></script>
+</div>
 </body>
 </html>
