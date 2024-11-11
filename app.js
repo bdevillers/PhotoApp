@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 19-10-2';
+    const appVersion = 'v. 20-00';
     
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
@@ -105,6 +105,22 @@ document.addEventListener("DOMContentLoaded", () => {
             reader.readAsDataURL(file);
         }
     });
+
+    // Obtenir la géolocalisation
+    function getGeolocation() {
+        return new Promise((resolve, reject) => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const { latitude, longitude } = position.coords;
+                    resolve({ latitude, longitude });
+                }, () => {
+                    reject("Erreur de géolocalisation.");
+                });
+            } else {
+                reject("Géolocalisation non supportée par le navigateur.");
+            }
+        });
+    }
 
     // Récupérer l'adresse avec la géolocalisation
     async function getAddress(latitude, longitude) {
