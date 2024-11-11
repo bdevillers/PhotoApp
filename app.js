@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 21-31';
+    const appVersion = 'v. 22-42';
 
     // Afficher la version de l'application
     const appVersionElement = document.getElementById("appVersion");
