@@ -149,5 +149,5 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.save("rapport_photo.pdf");
     }
 
-    generatePdfBtn.addEventListener("click", generatePdf);
+    generatePdfBtn.addEventListener("click", generatePdfBtn);
 });
