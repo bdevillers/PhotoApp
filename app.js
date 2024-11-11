@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return html2canvas(mapContainer).then(canvas => canvas.toDataURL("image/png"));
     }
 
-    async function generatePdfBtn() {
+    async function generatePdf() {
         try {
             geolocationData = await getGeolocation();
             await displayMap(geolocationData.latitude, geolocationData.longitude);
@@ -149,5 +149,5 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.save("rapport_photo.pdf");
     }
 
-    generatePdfBtn.addEventListener("click", generatePdfBtn);
+    generatePdfBtn.addEventListener("click", generatePdf);
 });
