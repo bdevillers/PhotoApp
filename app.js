@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 21-06';
+    const appVersion = 'v. 21-07';
     
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
@@ -93,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 photo.style.display = "block";
                 photoData = e.target.result;
                 generatePdfBtn.disabled = false; // Active le bouton PDF
-                getGeolocation();
             };
             reader.readAsDataURL(file);
         }
@@ -167,7 +166,9 @@ document.addEventListener("DOMContentLoaded", () => {
     async function generatePdf() {
         try {
             // Compléter la géolocalisation avec l'adresse et l'IP
-            const { latitude, longitude } = geolocationData;
+            geolocationData = await getGeolocation();
+            await displayMap(geolocationData.latitude, geolocationData.longitude);
+            //const { latitude, longitude } = geolocationData;
             addressData = await getAddress(latitude, longitude);
             ipData = await getIPAddress();
         } catch (error) {
