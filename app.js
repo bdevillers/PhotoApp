@@ -15,9 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let ipData = null;
     let map;
 
-    //Debug => Affichage de la version 
-    alert(appVersion);
-    
     // Fonction de formatage de la date pour le nom et le contenu du fichier
     function formatDate(forFileName = false) {
         const now = new Date();
@@ -90,6 +87,8 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
             alert("Erreur lors de la géolocalisation : " + error);
         }
+        //Debug => Affichage de la version 
+        alert(appVersion);
     });
 
     // Récupération de la photo depuis l'appareil
