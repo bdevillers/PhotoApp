@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+    const appVersion = 'v. 18.30-3'
+    
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
     const photo = document.getElementById("photo");
@@ -12,6 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let ipData = null;
     let map;
 
+    //Debug => Affichage de la version 
+    alert(appVersion);
+    
     // Fonction de formatage de la date pour le nom et le contenu du fichier
     function formatDate(forFileName = false) {
         const now = new Date();
@@ -195,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 doc.text(`Version d'OS: ${osVersion}`, 10, 220);
 
                 //Informations sur la version de l'application
-                doc.text('v 18-30');
+                //doc.text(appVersion, 10, 100);
 
                 // Nom dynamique pour le fichier
                 const fileName = `${formatDate(true)}-rapport_photo.pdf`;
