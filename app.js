@@ -112,6 +112,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    async function displayMap(latitude, longitude) {
+        if (!map) {
+            map = L.map('map').setView([latitude, longitude], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+        } else {
+            map.setView([latitude, longitude], 13);
+        }
+        L.marker([latitude, longitude]).addTo(map).bindPopup("Position actuelle").openPopup();
+        mapContainer.style.display = "block";
+    }
+
     // Génération du PDF
     async function generatePdf() {
         try {
