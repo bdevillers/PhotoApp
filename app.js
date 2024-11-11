@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const generatePdfBtn = document.getElementById("generatePdfBtn");
     const mapContainer = document.getElementById("map");
     const logoPath = "logo.png"; 
+    const formatDate = formatDate()
 
     let photoData = null;
     let geolocationData = null;
@@ -15,7 +16,19 @@ document.addEventListener("DOMContentLoaded", () => {
     // Format date pour le nom de fichier
     function formatDate() {
         const now = new Date();
-        return now.toISOString().replace(/[:.]/g, "-");
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+
+        const reportStringName = 'Rapport généré le '+day+'/'+month+'/'+year+' à '+hours+'h'+minutes;
+        const fileName = year+'-'+month+'-'+'day'+hours+'-'+minutes+'-rapport-photo.pdf';
+
+        //return nowReportName
+        //return `${day}/${month}/${year} ${hours}:${minutes}`;
+        //return now.toISOString().replace(/[:.]/g, "-");
+        
     }
 
     // Obtenir le type et la version de l'OS
@@ -193,11 +206,14 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Version d'OS: ${osVersion}`, 10, 220);
         doc.text(`Adresse IP: ${ipData}`, 10, 190);
 
-        // Informations sur la version de l'application
-        doc.text('v 17-50')
+        //Informations sur la version de l'application
+        doc.text('v 18-10')
+
+        //Informations sur le rapport
+        doc.text(formatDate);
 
         // Nom dynamique pour le fichier
-        const fileName = `${formatDate()}-rapport_photo.pdf`;
+        //const fileName = `${formatDate()}-rapport_photo.pdf`;
         doc.save(fileName);
     }
 
