@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 21-18';
+    const appVersion = 'v. 21-25';
     
     const takePhotoBtn = document.getElementById("takePhotoBtn");
     const cameraInput = document.getElementById("cameraInput");
@@ -59,28 +59,25 @@ document.addEventListener("DOMContentLoaded", () => {
         return { osType, osVersion };
     }
 
-    // Obtenir la géolocalisation
-    function getGeolocation() {
-        return new Promise((resolve, reject) => {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const { latitude, longitude } = position.coords;
-                    resolve({ latitude, longitude });
-                }, () => {
-                    reject("Erreur de géolocalisation.");
-                });
-            } else {
-                reject("Géolocalisation non supportée par le navigateur.");
-            }
-        });
-        //DEBUG
-        alert('Latitude = '+latitude);
-    }
-
     // Prendre une photo et afficher la géolocalisation
     takePhotoBtn.addEventListener("click", async () => {
         cameraInput.click();
         alert(appVersion);
+        try {
+            // Obtenir la géolocalisation après le clic
+            geolocationData = await getGeolocation();
+            console.log("Géolocalisation obtenue :", geolocationData); // Affiche les données dans la console
+
+            // Optionnel : Affiche la géolocalisation sur la page
+            const mapContainer = document.getElementById("map");
+            if (mapContainer) {
+                // Afficher la carte ou les informations de géolocalisation ici
+                await displayMap(geolocationData.latitude, geolocationData.longitude);
+            }
+        } catch (error) {
+            console.error("Erreur lors de la géolocalisation :", error);
+            alert("Erreur lors de la géolocalisation : " + error);
+        }
     });
 
     // Récupération de la photo depuis l'appareil
@@ -112,6 +109,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 reject("Géolocalisation non supportée par le navigateur.");
             }
         });
+        //DEBUG
+        alert('Latitude = '+latitude);
     }
 
     // Récupérer l'adresse avec la géolocalisation
