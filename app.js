@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     takePhotoBtn.addEventListener("click", async () => 
     {
         cameraInput.click();
-        alert(appVersion);
+        console.log("Version :", appVersion); //Affiche la version de l'application
         try {
             // Obtenir la géolocalisation après le clic
             geolocationData = await getGeolocation();
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Erreur lors de la géolocalisation :", error);
             alert("Erreur lors de la géolocalisation : " + error);
         }
-    );
+    )};
 
     // Récupération de la photo depuis l'appareil
     cameraInput.addEventListener("change", async (event) => {
