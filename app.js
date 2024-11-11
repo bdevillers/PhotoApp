@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const generatePdfBtn = document.getElementById("generatePdfBtn");
     const mapContainer = document.getElementById("map");
     const logoPath = "logo.png"; 
-    const formatDate = formatDate()
 
     let photoData = null;
     let geolocationData = null;
@@ -13,22 +12,20 @@ document.addEventListener("DOMContentLoaded", () => {
     let ipData = null;
     let map;
 
-    // Format date pour le nom de fichier
-    function formatDate() {
+    // Fonction de formatage de la date pour le nom et le contenu du fichier
+    function formatDate(forFileName = false) {
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-
-        const reportStringName = 'Rapport généré le '+day+'/'+month+'/'+year+' à '+hours+'h'+minutes;
-        const fileName = year+'-'+month+'-'+'day'+hours+'-'+minutes+'-rapport-photo.pdf';
-
-        //return nowReportName
-        //return `${day}/${month}/${year} ${hours}:${minutes}`;
-        //return now.toISOString().replace(/[:.]/g, "-");
         
+        if (forFileName) {
+            return `${year}-${month}-${day}_${hours}-${minutes}`;
+        } else {
+            return `${day}/${month}/${year} à ${hours}:${minutes}`;
+        }
     }
 
     // Obtenir le type et la version de l'OS
@@ -115,34 +112,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Obtenir l'adresse IP
-    async function getIPAddress() {
-        const response = await fetch("https://api.ipify.org?format=json");
-        if (response.ok) {
-            const data = await response.json();
-            return data.ip;
-        } else {
-            throw new Error("Impossible de récupérer l'adresse IP.");
-        }
-    }
-    
-    async function displayMap(latitude, longitude) {
-        if (!map) {
-            map = L.map('map').setView([latitude, longitude], 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(map);
-        } else {
-            map.setView([latitude, longitude], 13);
-        }
-        L.marker([latitude, longitude]).addTo(map).bindPopup("Position actuelle").openPopup();
-        mapContainer.style.display = "block";
-    }
-
     // Génération du PDF
     async function generatePdf() {
         try {
-            // Compléter la géolocalisation avec l'adresse
+            // Compléter la géolocalisation avec l'adresse et l'IP
             const { latitude, longitude } = geolocationData;
             addressData = await getAddress(latitude, longitude);
             ipData = await getIPAddress();
@@ -155,66 +128,53 @@ document.addEventListener("DOMContentLoaded", () => {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
 
+        // Titre
         doc.setFontSize(18);
         doc.text("Rapport de Prise de Vue", 10, 10);
 
+        // Phrase de génération du rapport avec date et heure
+        const generationText = `Rapport généré le ${formatDate()}`;
+        doc.setFontSize(12);
+        doc.text(generationText, 10, 20);
+
         // Logo
         if (logoPath) {
-            doc.addImage(logoPath, "PNG", 10, 20, 40, 20);
+            doc.addImage(logoPath, "PNG", 10, 30, 40, 20);
         }
 
-        // Photo
-        // Dimensions pour la photo
-        const maxWidth = 200;
-        const maxHeight = 200;
-    
+        // Photo avec ajustement de dimensions
         if (photoData) {
             const img = new Image();
             img.src = photoData;
-    
-            // Une fois l'image chargée, ajout dans le PDF
+
             img.onload = function() {
                 const aspectRatio = img.width / img.height;
+                const maxWidth = 180;
+                const maxHeight = 100;
                 let width = maxWidth;
                 let height = maxHeight;
-    
+
                 if (aspectRatio > 1) {
-                    // Image horizontale
                     height = maxWidth / aspectRatio;
                 } else {
-                    // Image verticale ou carrée
                     width = maxHeight * aspectRatio;
                 }
-    
-                doc.addImage(photoData, "JPEG", 10, 50, width, height);
-            if (photoData) {
-                doc.addImage(photoData, "JPEG", 10, 50, 180, 100);
-            }
 
-        // Détails géolocalisation
-        doc.setFontSize(12);
-        doc.text(`Latitude: ${geolocationData.latitude}`, 10, 160);
-        doc.text(`Longitude: ${geolocationData.longitude}`, 10, 170);
-        doc.text(`Adresse: ${addressData}`, 10, 180);
-        // Carte
-        //if (mapImageData) {
-        //    doc.addImage(mapImageData, "PNG", 10, 210, 180, 100);
-        //}
+                doc.addImage(photoData, "JPEG", 10, 60, width, height);
 
-        //Informations sur le périphérique
-        doc.text(`Type d'OS: ${osType}`, 10, 210);
-        doc.text(`Version d'OS: ${osVersion}`, 10, 220);
-        doc.text(`Adresse IP: ${ipData}`, 10, 190);
+                // Détails géolocalisation et informations système
+                doc.text(`Latitude: ${latitude}`, 10, 170);
+                doc.text(`Longitude: ${longitude}`, 10, 180);
+                doc.text(`Adresse: ${addressData}`, 10, 190);
+                doc.text(`Adresse IP: ${ipData}`, 10, 200);
+                doc.text(`Type d'OS: ${osType}`, 10, 210);
+                doc.text(`Version d'OS: ${osVersion}`, 10, 220);
 
-        //Informations sur la version de l'application
-        doc.text('v 18-15');
-
-        //Informations sur le rapport
-        doc.text(formatDate);
-
-        // Nom dynamique pour le fichier
-        //const fileName = `${formatDate()}-rapport_photo.pdf`;
-        doc.save(fileName);
+                // Nom dynamique pour le fichier
+                const fileName = `${formatDate(true)}-rapport_photo.pdf`;
+                doc.save(fileName);
+            };
+        }
     }
 
     generatePdfBtn.addEventListener("click", generatePdf);
