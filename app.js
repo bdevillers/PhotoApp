@@ -88,10 +88,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function generatePdf() {
         try {
-            alert('tentative géolocalisation');
             geolocationData = await getGeolocation();
             await displayMap(geolocationData.latitude, geolocationData.longitude);
-            alert('géolocalisation en cours');
         } catch (error) {
             alert(error);
             return;
@@ -140,9 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.text(`Adresse IP: ${ipData}`, 10, 200);
 
         // Carte
-        if (mapImageData) {
-            doc.addImage(mapImageData, "PNG", 10, 210, 180, 100);
-        }
+        //if (mapImageData) {
+        //    doc.addImage(mapImageData, "PNG", 10, 210, 180, 100);
+        //}
 
         // Horodatage et autres informations
         const photoName = `Photo_${new Date().toISOString()}.jpg`;
