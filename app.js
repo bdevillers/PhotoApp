@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    const appVersion = 'v. 20-00';
+    const appVersion = 'v. 20-40';
     const versionOdiCEEPhoto = document.getElementById("app-version");
     versionOdiCEEPhoto = appVersion;
     
