@@ -22,21 +22,23 @@
 </head>
 <body>
 
-<h2>Application de Rapport Photo</h2>
+<h2>Application de Rapport Photo v24.11.11.10-56</h2>
 
-<img id="logo" src="logo.png" alt="Logo de la société">
+<img id="logo" src="https://www.adeena.fr/wp-content/uploads/2024/01/Logo-ADEENA-233x44-sans-texte-150x38.png" alt="Logo Adeena">
 
 <div>
-    <button id="takePhotoBtn">Prendre une photo</button>
+    <button id="takePhoto">Prendre une photo</button>
     <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display: none;">
 </div>
-<img id="photo" style="display: none; max-width: 100%; height: auto;" />
-
-<!-- Conteneur pour la carte -->  
-<div id="map"></div> 
+<table>
+    <t>
+        <td><img id="photo" style="display: none; max-width: 100%; height: auto;" /></td>
+        <td><div id="map"><!-- Conteneur pour la carte --> </div></td>
+    </t>
+</table>
 
 <div>
-    <button id="generatePdfBtn" disabled>Générer le PDF</button>
+    <button id="generatePdf" disabled>Générer le PDF</button>
 </div>
 
 <script src="app.js"></script>
